@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Membresías{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Membresías</h1>
+    <a class="btn btn-primary" href="{% url 'memberships:create' %}">Nueva membresía</a>
+</div>
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Tipo</th>
+            <th>Precio</th>
+            <th>Próximo pago</th>
+            <th>Último pago</th>
+            <th>Vigencia</th>
+            <th>Estado</th>
+            <th class="text-end">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for membership in memberships %}
+        <tr>
+            <td>{{ membership.client }}</td>
+            <td>{{ membership.get_type_display }}</td>
+            <td>${{ membership.price }}</td>
+            <td>{{ membership.next_payment }}</td>
+            <td>{{ membership.last_payment_at|default:"—" }}</td>
+            <td>{{ membership.start_date }}{% if membership.end_date %} → {{ membership.end_date }}{% else %} (sin fin){% endif %}</td>
+            <td>
+                {% if membership.is_active %}
+                    <span class="badge text-bg-success">Activa</span>
+                {% else %}
+                    <span class="badge text-bg-secondary">Inactiva</span>
+                {% endif %}
+            </td>
+            <td class="text-end">
+                <a class="btn btn-sm btn-outline-secondary" href="{% url 'memberships:detail' membership.pk %}">Ver</a>
+                <a class="btn btn-sm btn-outline-primary" href="{% url 'memberships:update' membership.pk %}">Editar</a>
+                <a class="btn btn-sm btn-outline-danger" href="{% url 'memberships:delete' membership.pk %}">Eliminar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="8" class="text-center text-muted">No hay membresías cargadas.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
