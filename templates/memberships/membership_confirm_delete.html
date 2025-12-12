@@ -2,7 +2,7 @@
 {% block title %}Eliminar membresía{% endblock %}
 {% block content %}
 <h1 class="h4 mb-3">Eliminar membresía</h1>
-<p class="mb-4">¿Seguro que deseas eliminar "{{ membership.name }}"? Esta acción no se puede deshacer.</p>
+<p class="mb-4">¿Seguro que deseas eliminar "{{ membership }}"? Esta acción no se puede deshacer.</p>
 <form method="post" class="d-flex gap-2">
     {% csrf_token %}
     <a class="btn btn-outline-secondary" href="{% url 'memberships:list' %}">Cancelar</a>

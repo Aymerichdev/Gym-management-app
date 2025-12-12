@@ -6,7 +6,7 @@ from apps.payments.models import Payment
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
     list_display = (
-        "client",
+        "membership",
         "period_start",
         "period_end",
         "amount",
@@ -15,6 +15,6 @@ class PaymentAdmin(admin.ModelAdmin):
         "method",
     )
     list_filter = ("status", "method", "period_start")
-    search_fields = ("client__first_name", "client__last_name", "invoice_number")
-    raw_id_fields = ("client", "membership", "recorded_by")
+    search_fields = ("membership__client__first_name", "membership__client__last_name", "invoice_number")
+    raw_id_fields = ("membership", "recorded_by")
     date_hierarchy = "period_start"

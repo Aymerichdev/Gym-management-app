@@ -8,9 +8,10 @@
 <table class="table table-striped align-middle">
     <thead>
         <tr>
-            <th>Nombre</th>
+            <th>Cliente</th>
+            <th>Tipo</th>
             <th>Precio</th>
-            <th>Duración (meses)</th>
+            <th>Próximo pago</th>
             <th>Activa</th>
             <th class="text-end">Acciones</th>
         </tr>
@@ -18,9 +19,10 @@
     <tbody>
         {% for membership in memberships %}
         <tr>
-            <td>{{ membership.name }}</td>
+            <td>{{ membership.client }}</td>
+            <td>{{ membership.get_type_display }}</td>
             <td>${{ membership.price }}</td>
-            <td>{{ membership.duration_months }}</td>
+            <td>{{ membership.next_payment }}</td>
             <td>
                 {% if membership.is_active %}
                     <span class="badge text-bg-success">Sí</span>

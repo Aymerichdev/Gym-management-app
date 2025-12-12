@@ -5,6 +5,13 @@ from apps.memberships.models import Membership
 
 @admin.register(Membership)
 class MembershipAdmin(admin.ModelAdmin):
-    list_display = ("name", "price", "duration_months", "is_active")
-    list_filter = ("is_active",)
-    search_fields = ("name",)
+    list_display = (
+        "client",
+        "type",
+        "price",
+        "next_payment",
+        "is_active",
+    )
+    list_filter = ("type", "is_active", "next_payment")
+    search_fields = ("client__first_name", "client__last_name")
+    raw_id_fields = ("client",)

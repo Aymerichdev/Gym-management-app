@@ -5,7 +5,6 @@ from apps.clients.models import Client
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ("first_name", "last_name", "email", "status", "coach")
-    list_filter = ("status", "coach")
+    list_display = ("first_name", "last_name", "email", "phone", "start_date")
+    list_filter = ("start_date",)
     search_fields = ("first_name", "last_name", "email")
-    raw_id_fields = ("coach",)
