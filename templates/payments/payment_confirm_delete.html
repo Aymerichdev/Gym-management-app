@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Eliminar pago{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">Eliminar pago</h1>
+<p>¿Seguro que deseas eliminar el pago de {{ payment.membership.client }} por ${{ payment.amount }} ({{ payment.period_start }} → {{ payment.period_end }})?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+    <a class="btn btn-secondary" href="{% url 'payments:list' %}">Cancelar</a>
+</form>
+{% endblock %}
