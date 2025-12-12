@@ -1,7 +1,24 @@
 from pathlib import Path
 import os
 
+
+def load_env_file(path: Path) -> None:
+    """Populate os.environ with key=value pairs from a .env file without overriding existing vars."""
+
+    if not path.exists():
+        return
+
+    for line in path.read_text().splitlines():
+        cleaned = line.strip()
+        if not cleaned or cleaned.startswith("#") or "=" not in cleaned:
+            continue
+
+        key, value = cleaned.split("=", 1)
+        os.environ.setdefault(key.strip(), value.strip().strip("\"'"))
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_env_file(Path(__file__).resolve().parent.parent / ".env")
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-secret-key-change-me")
 DEBUG = os.getenv("DJANGO_DEBUG", "True").lower() in {"true", "1", "yes"}
