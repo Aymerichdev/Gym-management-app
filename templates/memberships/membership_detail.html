@@ -2,7 +2,10 @@
 {% block title %}Detalle de membresía{% endblock %}
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="h4 mb-0">{{ membership.client }} - {{ membership.get_type_display }}</h1>
+    <div>
+        <p class="text-muted mb-1">{{ membership.client }}</p>
+        <h1 class="h4 mb-0">{{ membership.get_type_display }}</h1>
+    </div>
     <div class="btn-group">
         <a class="btn btn-outline-primary" href="{% url 'memberships:update' membership.pk %}">Editar</a>
         <a class="btn btn-outline-danger" href="{% url 'memberships:delete' membership.pk %}">Eliminar</a>
@@ -11,6 +14,8 @@
 <div class="card">
     <div class="card-body">
         <dl class="row mb-0">
+            <dt class="col-sm-3">Cliente</dt>
+            <dd class="col-sm-9">{{ membership.client }}</dd>
             <dt class="col-sm-3">Tipo</dt>
             <dd class="col-sm-9">{{ membership.get_type_display }}</dd>
             <dt class="col-sm-3">Precio</dt>
@@ -23,8 +28,14 @@
             <dd class="col-sm-9">{{ membership.last_payment_at|default:"—" }}</dd>
             <dt class="col-sm-3">Próximo pago</dt>
             <dd class="col-sm-9">{{ membership.next_payment }}</dd>
-            <dt class="col-sm-3">Activa</dt>
-            <dd class="col-sm-9">{% if membership.is_active %}Sí{% else %}No{% endif %}</dd>
+            <dt class="col-sm-3">Estado</dt>
+            <dd class="col-sm-9">
+                {% if membership.is_active %}
+                    <span class="badge text-bg-success">Activa</span>
+                {% else %}
+                    <span class="badge text-bg-secondary">Inactiva</span>
+                {% endif %}
+            </dd>
             {% if membership.description %}
             <dt class="col-sm-3">Descripción</dt>
             <dd class="col-sm-9">{{ membership.description }}</dd>

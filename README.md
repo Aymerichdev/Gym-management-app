@@ -19,6 +19,27 @@ membresías y pagos mensuales.
    ```bash
    pip install -r requirements.txt
    ```
+3. Variables de entorno (elige el método que prefieras):
+   - **Usar archivo `.env` (recomendado):**
+     ```bash
+     cp .env.example .env
+     # Edita .env con tus valores
+     ```
+     El proyecto carga automáticamente `.env` al iniciar, sin sobreescribir variables ya exportadas en tu shell.
+   - **O exportar a mano en la terminal:**
+     ```bash
+     export DB_ENGINE=django.db.backends.postgresql
+     export DB_NAME=gym
+     export DB_USER=gym_user
+     export DB_PASSWORD=superseguro
+     export DB_HOST=localhost
+     export DB_PORT=5432
+     export DJANGO_SECRET_KEY=usa-una-clave-segura
+     export DJANGO_DEBUG=False
+     export DJANGO_ALLOWED_HOSTS="localhost 127.0.0.1"
+     ```
+4. Ejecuta migraciones y crea un superusuario para entrar al panel admin:
+   ```bash
 3. Opcional: exporta variables de entorno para usar PostgreSQL (por defecto usa SQLite en `db.sqlite3`):
    ```bash
    export DB_ENGINE=django.db.backends.postgresql
