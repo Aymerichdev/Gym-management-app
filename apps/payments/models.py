@@ -24,9 +24,6 @@ class Payment(models.Model):
 
     amount = models.DecimalField(max_digits=8, decimal_places=2)
     months_covered = models.PositiveIntegerField(default=1)
-    period_start = models.DateField()
-    period_end = models.DateField()
-
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
     paid_at = models.DateTimeField(null=True, blank=True)
 
@@ -56,9 +53,6 @@ class Payment(models.Model):
 
         if self.months_covered is not None and not (1 <= self.months_covered <= 24):
             errors["months_covered"] = "Los meses cubiertos deben estar entre 1 y 24."
-
-        if self.period_end and self.period_start and self.period_end < self.period_start:
-            errors["period_end"] = "El fin de periodo no puede ser anterior al inicio."
 
         if self.status == self.Status.PAID:
             if not self.paid_at:

@@ -10,8 +10,6 @@ class PaymentForm(forms.ModelForm):
             "membership",
             "amount",
             "months_covered",
-            "period_start",
-            "period_end",
             "status",
             "paid_at",
             "method",
@@ -25,8 +23,6 @@ class PaymentForm(forms.ModelForm):
             "months_covered": forms.NumberInput(
                 attrs={"class": "form-control", "min": 1, "max": 24}
             ),
-            "period_start": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
-            "period_end": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
             "status": forms.Select(attrs={"class": "form-select"}),
             "paid_at": forms.DateTimeInput(attrs={"class": "form-control", "type": "datetime-local"}),
             "method": forms.Select(attrs={"class": "form-select"}),
@@ -38,8 +34,6 @@ class PaymentForm(forms.ModelForm):
             "membership": "Membresía",
             "amount": "Monto",
             "months_covered": "Meses cubiertos",
-            "period_start": "Periodo inicio",
-            "period_end": "Periodo fin",
             "status": "Estado",
             "paid_at": "Pagado el",
             "method": "Método de pago",

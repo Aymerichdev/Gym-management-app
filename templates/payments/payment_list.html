@@ -10,7 +10,6 @@
         <tr>
             <th>Cliente</th>
             <th>Membresía</th>
-            <th>Periodo</th>
             <th>Meses</th>
             <th>Monto</th>
             <th>Estado</th>
@@ -24,7 +23,6 @@
         <tr>
             <td>{{ payment.membership.client }}</td>
             <td>{{ payment.membership.get_type_display }}</td>
-            <td>{{ payment.period_start }} → {{ payment.period_end }}</td>
             <td>{{ payment.months_covered }}</td>
             <td>${{ payment.amount }}</td>
             <td>
@@ -37,7 +35,7 @@
                 {% endif %}
             </td>
             <td>{{ payment.get_method_display|default:"—" }}</td>
-            <td>{{ payment.invoice_number|default:"—" }}</td>
+            <td>{{ payment.invoice_number|default:payment.id }}</td>
             <td class="text-end">
                 <a class="btn btn-sm btn-outline-secondary" href="{% url 'payments:detail' payment.pk %}">Ver</a>
                 <a class="btn btn-sm btn-outline-primary" href="{% url 'payments:update' payment.pk %}">Editar</a>

@@ -22,14 +22,6 @@
             {{ form.status }}
         </div>
         <div class="col-md-6">
-            <label class="form-label" for="id_period_start">Periodo inicio</label>
-            {{ form.period_start }}
-        </div>
-        <div class="col-md-6">
-            <label class="form-label" for="id_period_end">Periodo fin</label>
-            {{ form.period_end }}
-        </div>
-        <div class="col-md-6">
             <label class="form-label" for="id_paid_at">Pagado el</label>
             {{ form.paid_at }}
         </div>
@@ -40,6 +32,7 @@
         <div class="col-md-6">
             <label class="form-label" for="id_invoice_number">Factura/recibo</label>
             {{ form.invoice_number }}
+            <div class="form-text">Si se deja vacío, se mostrará el ID del pago.</div>
         </div>
         <div class="col-md-6">
             <label class="form-label" for="id_recorded_by">Registrado por</label>

@@ -23,11 +23,11 @@ class Membership(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2)
     description = models.TextField(blank=True)
 
-    start_date = models.DateField(default=timezone.now)
+    start_date = models.DateField(default=timezone.localdate)
     end_date = models.DateField(null=True, blank=True)
 
     last_payment_at = models.DateTimeField(null=True, blank=True)
-    next_payment = models.DateField()
+    next_payment = models.DateField(blank=True)
 
     is_active = models.BooleanField(default=True)
 
@@ -46,6 +46,9 @@ class Membership(models.Model):
 
         if self.type in self.PRICE_MAP:
             self.price = self.PRICE_MAP[self.type]
+
+        if not self.next_payment:
+            self.next_payment = self.start_date or timezone.localdate()
 
         today = timezone.localdate()
 
