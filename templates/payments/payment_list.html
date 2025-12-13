@@ -11,6 +11,7 @@
             <th>Cliente</th>
             <th>Membresía</th>
             <th>Periodo</th>
+            <th>Meses</th>
             <th>Monto</th>
             <th>Estado</th>
             <th>Método</th>
@@ -24,6 +25,7 @@
             <td>{{ payment.membership.client }}</td>
             <td>{{ payment.membership.get_type_display }}</td>
             <td>{{ payment.period_start }} → {{ payment.period_end }}</td>
+            <td>{{ payment.months_covered }}</td>
             <td>${{ payment.amount }}</td>
             <td>
                 {% if payment.status == payment.Status.PAID %}
@@ -34,7 +36,7 @@
                     <span class="badge text-bg-warning text-dark">Pendiente</span>
                 {% endif %}
             </td>
-            <td>{{ payment.method|default:"—" }}</td>
+            <td>{{ payment.get_method_display|default:"—" }}</td>
             <td>{{ payment.invoice_number|default:"—" }}</td>
             <td class="text-end">
                 <a class="btn btn-sm btn-outline-secondary" href="{% url 'payments:detail' payment.pk %}">Ver</a>
@@ -43,7 +45,7 @@
             </td>
         </tr>
         {% empty %}
-        <tr><td colspan="8" class="text-center text-muted">No hay pagos registrados.</td></tr>
+        <tr><td colspan="9" class="text-center text-muted">No hay pagos registrados.</td></tr>
         {% endfor %}
     </tbody>
 </table>

@@ -10,6 +10,7 @@ class PaymentAdmin(admin.ModelAdmin):
         "period_start",
         "period_end",
         "amount",
+        "months_covered",
         "status",
         "paid_at",
         "method",

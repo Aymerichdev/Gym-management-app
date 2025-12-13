@@ -27,12 +27,22 @@ class PaymentCreateView(CreateView):
     template_name = "payments/payment_form.html"
     success_url = reverse_lazy("payments:list")
 
+    def form_valid(self, form):
+        if self.request.user.is_authenticated and not form.instance.recorded_by:
+            form.instance.recorded_by = self.request.user
+        return super().form_valid(form)
+
 
 class PaymentUpdateView(UpdateView):
     model = Payment
     form_class = PaymentForm
     template_name = "payments/payment_form.html"
     success_url = reverse_lazy("payments:list")
+
+    def form_valid(self, form):
+        if self.request.user.is_authenticated and not form.instance.recorded_by:
+            form.instance.recorded_by = self.request.user
+        return super().form_valid(form)
 
 
 class PaymentDeleteView(DeleteView):

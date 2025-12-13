@@ -17,6 +17,9 @@
             <dt class="col-sm-3">Periodo</dt>
             <dd class="col-sm-9">{{ payment.period_start }} → {{ payment.period_end }}</dd>
 
+            <dt class="col-sm-3">Meses cubiertos</dt>
+            <dd class="col-sm-9">{{ payment.months_covered }}</dd>
+
             <dt class="col-sm-3">Monto</dt>
             <dd class="col-sm-9">${{ payment.amount }}</dd>
 
@@ -33,7 +36,7 @@
             </dd>
 
             <dt class="col-sm-3">Método</dt>
-            <dd class="col-sm-9">{{ payment.method|default:"—" }}</dd>
+            <dd class="col-sm-9">{{ payment.get_method_display|default:"—" }}</dd>
 
             <dt class="col-sm-3">Factura/recibo</dt>
             <dd class="col-sm-9">{{ payment.invoice_number|default:"—" }}</dd>
