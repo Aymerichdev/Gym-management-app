@@ -16,8 +16,7 @@ class Payment(models.Model):
     )
 
     amount = models.DecimalField(max_digits=8, decimal_places=2)
-    period_start = models.DateField()
-    period_end = models.DateField()
+    months_covered = models.PositiveIntegerField(default=1)
 
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
     paid_at = models.DateTimeField(null=True, blank=True)
