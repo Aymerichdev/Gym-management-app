@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}{% if object %}Editar membresía{% else %}Nueva membresía{% endif %}{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">{% if object %}Editar membresía{% else %}Nueva membresía{% endif %}</h1>
+<form method="post" class="card" novalidate>
+    <div class="card-body">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="mb-3">
+            <label class="form-label" for="id_client">Cliente</label>
+            {{ form.client }}
+            {% for error in form.client.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="id_type">Tipo</label>
+            {{ form.type }}
+            {% for error in form.type.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="id_price_display">Precio</label>
+            {{ form.price_display }}
+            <div class="form-text">Se calcula automáticamente según el tipo.</div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="id_description">Descripción</label>
+            {{ form.description }}
+            {% for error in form.description.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+        </div>
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label" for="id_start_date">Fecha de inicio</label>
+                {{ form.start_date }}
+                {% for error in form.start_date.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" for="id_end_date">Fecha de fin</label>
+                {{ form.end_date }}
+                {% for error in form.end_date.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+            </div>
+        </div>
+
+        <div class="form-check mt-3">
+            {{ form.is_active }}
+            <label class="form-check-label" for="id_is_active">Activa</label>
+            {% for error in form.is_active.errors %}<div class="text-danger small">{{ error }}</div>{% endfor %}
+        </div>
+    </div>
+    <div class="card-footer d-flex justify-content-between">
+        <a class="btn btn-link" href="{% url 'memberships:list' %}">Cancelar</a>
+        <button class="btn btn-primary" type="submit">Guardar</button>
+    </div>
+</form>
+{% endblock %}
