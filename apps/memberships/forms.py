@@ -54,3 +54,20 @@ class MembershipForm(forms.ModelForm):
             initial_price = Membership.PRICE_MAP.get(self.initial["type"])
         self.fields["price_display"].initial = initial_price
         self.fields["start_date"].initial = self.initial.get("start_date") or timezone.localdate()
+
+
+class MembershipPriceForm(forms.ModelForm):
+    class Meta:
+        model = Membership
+        fields = ["price"]
+        widgets = {
+            "price": forms.NumberInput(attrs={"class": "form-control", "step": "0.01"}),
+        }
+        labels = {"price": "Precio"}
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance._allow_custom_price = True
+        if commit:
+            instance.save(update_fields=["price"])
+        return instance

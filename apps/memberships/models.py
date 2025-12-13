@@ -44,7 +44,7 @@ class Membership(models.Model):
 
         self.description = (self.description or "").strip()
 
-        if self.type in self.PRICE_MAP:
+        if self.type in self.PRICE_MAP and not getattr(self, "_allow_custom_price", False):
             self.price = self.PRICE_MAP[self.type]
 
         if not self.next_payment:
