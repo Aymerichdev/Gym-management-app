@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}{% if form.instance.pk %}Editar pago{% else %}Registrar pago{% endif %}{% endblock %}
+{% block content %}
+<h1 class="h4 mb-3">{% if form.instance.pk %}Editar pago{% else %}Registrar pago{% endif %}</h1>
+<form method="post" novalidate>
+    {% csrf_token %}
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label" for="id_membership">Membresía</label>
+            {{ form.membership }}
+        </div>
+        <div class="col-md-3">
+            <label class="form-label" for="id_amount">Monto</label>
+            {{ form.amount }}
+        </div>
+        <div class="col-md-3">
+            <label class="form-label" for="id_months_covered">Meses cubiertos</label>
+            {{ form.months_covered }}
+        </div>
+        <div class="col-md-3">
+            <label class="form-label" for="id_status">Estado</label>
+            {{ form.status }}
+        </div>
+        <div class="col-md-6">
+            <label class="form-label" for="id_period_start">Periodo inicio</label>
+            {{ form.period_start }}
+        </div>
+        <div class="col-md-6">
+            <label class="form-label" for="id_period_end">Periodo fin</label>
+            {{ form.period_end }}
+        </div>
+        <div class="col-md-6">
+            <label class="form-label" for="id_paid_at">Pagado el</label>
+            {{ form.paid_at }}
+        </div>
+        <div class="col-md-6">
+            <label class="form-label" for="id_method">Método</label>
+            {{ form.method }}
+        </div>
+        <div class="col-md-6">
+            <label class="form-label" for="id_invoice_number">Factura/recibo</label>
+            {{ form.invoice_number }}
+        </div>
+        <div class="col-md-6">
+            <label class="form-label" for="id_recorded_by">Registrado por</label>
+            {{ form.recorded_by }}
+        </div>
+        <div class="col-12">
+            <label class="form-label" for="id_notes">Notas</label>
+            {{ form.notes }}
+        </div>
+    </div>
+    <div class="mt-4 d-flex gap-2">
+        <button class="btn btn-primary" type="submit">Guardar</button>
+        <a class="btn btn-secondary" href="{% url 'payments:list' %}">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

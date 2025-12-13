@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Pago #{{ payment.id }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h4 mb-0">Pago de {{ payment.membership.client }}</h1>
+    <div>
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'payments:update' payment.pk %}">Editar</a>
+        <a class="btn btn-outline-danger btn-sm" href="{% url 'payments:delete' payment.pk %}">Eliminar</a>
+    </div>
+</div>
+<div class="card mb-3">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3">Membresía</dt>
+            <dd class="col-sm-9">{{ payment.membership }} ({{ payment.membership.get_type_display }})</dd>
+
+            <dt class="col-sm-3">Periodo</dt>
+            <dd class="col-sm-9">{{ payment.period_start }} → {{ payment.period_end }}</dd>
+
+            <dt class="col-sm-3">Meses cubiertos</dt>
+            <dd class="col-sm-9">{{ payment.months_covered }}</dd>
+
+            <dt class="col-sm-3">Monto</dt>
+            <dd class="col-sm-9">${{ payment.amount }}</dd>
+
+            <dt class="col-sm-3">Estado</dt>
+            <dd class="col-sm-9">
+                {% if payment.status == payment.Status.PAID %}
+                    <span class="badge text-bg-success">Pagado</span>
+                {% elif payment.status == payment.Status.OVERDUE %}
+                    <span class="badge text-bg-danger">Vencido</span>
+                {% else %}
+                    <span class="badge text-bg-warning text-dark">Pendiente</span>
+                {% endif %}
+                {% if payment.paid_at %}<span class="text-muted ms-2">Pagado el {{ payment.paid_at }}</span>{% endif %}
+            </dd>
+
+            <dt class="col-sm-3">Método</dt>
+            <dd class="col-sm-9">{{ payment.get_method_display|default:"—" }}</dd>
+
+            <dt class="col-sm-3">Factura/recibo</dt>
+            <dd class="col-sm-9">{{ payment.invoice_number|default:"—" }}</dd>
+
+            <dt class="col-sm-3">Notas</dt>
+            <dd class="col-sm-9">{{ payment.notes|default:"—" }}</dd>
+
+            <dt class="col-sm-3">Registrado por</dt>
+            <dd class="col-sm-9">{{ payment.recorded_by|default:"—" }}</dd>
+
+            <dt class="col-sm-3">Creado el</dt>
+            <dd class="col-sm-9">{{ payment.created_at }}</dd>
+        </dl>
+    </div>
+</div>
+<a class="btn btn-secondary" href="{% url 'payments:list' %}">Volver</a>
+{% endblock %}
