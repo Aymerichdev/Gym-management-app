@@ -90,3 +90,33 @@ Cada subcarpeta es una app Django autocontenida. No se ha añadido lógica dentr
 - (Cuando se creen) `migrations/`: carpeta que generará Django con las migraciones de los modelos; se crea al ejecutar `python manage.py makemigrations`.
 
 > Nota: no hay carpeta separada llamada `backend/` porque el propio proyecto Django es el backend. Las vistas, templates y estáticos vivirán dentro de las apps o en carpetas globales como `templates/` y `static/` cuando las añadas.
+
+### Tabla 1 — Usuarios del sistema (Account)
+
+| Entidad | Propósito                                      | Campos principales       | Reglas                                                                                          |
+| ------- | ---------------------------------------------- | ------------------------ | ----------------------------------------------------------------------------------------------- |
+| User    | Permitir login al sistema y controlar permisos | username, password, role | Solo existen 2 roles: Administrador (owner) y Coach (coach). El admin tiene permisos completos. |
+
+---
+
+### Tabla 2 — Clientes (Client)
+
+| Entidad | Propósito                                           | Campos principales                                      | Reglas                                                                                             |
+| ------- | --------------------------------------------------- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Client  | Guardar la información base de cada cliente del gym | first_name, last_name, email (único), phone, start_date | El estado “activo/vencido” no se guarda aquí; se determina con la membresía activa y next_payment. |
+
+---
+
+### Tabla 3 — Membresías (Membership)
+
+| Entidad    | Propósito                                                  | Campos principales                                                                                                                   | Reglas                                                                                                                                                                |
+| ---------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Membership | Representa la suscripción del cliente (historial incluido) | client_id (FK), type (basic/plus/vip), price, description, start_date, end_date (opcional), next_payment, last_payment_at, is_active | Un cliente puede tener varias membresías (historial), pero el sistema asegura que solo una esté activa a la vez (al activar una nueva, se desactivan las anteriores). |
+
+---
+
+### Tabla 4 — Pagos (Payment)
+
+| Entidad | Propósito                                                                  | Campos principales                                                                                                                                             | Reglas                                                                                                                                             |
+| ------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Payment | Registrar pagos asociados a una membresía (incluye pagos por varios meses) | membership_id (FK), amount, period_start, period_end, status (pending/paid/overdue), paid_at, method, invoice_number, notes, recorded_by (FK User), created_at | Al registrar un pago por X meses, se calcula period_end y se actualiza: membership.next_payment = period_end y membership.last_payment_at = now(). |
