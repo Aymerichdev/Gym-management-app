@@ -106,5 +106,12 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.User"
 
+AUTHENTICATION_BACKENDS = [
+    "apps.accounts.auth_backend.SinglePasswordBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
+
+SINGLE_ADMIN_PASSWORD = os.getenv("ADMIN_SINGLE_PASSWORD", "1234")
+
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/login/"

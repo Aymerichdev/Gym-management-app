@@ -1,13 +1,14 @@
 from decimal import Decimal
 
+from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.views import LoginView, PasswordChangeView, LogoutView
+from django.contrib.auth.views import PasswordChangeView, LogoutView
 from django.db.models import Sum, DecimalField, Value
 from django.db.models.functions import Coalesce
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView, UpdateView
+from django.views.generic import CreateView, TemplateView, UpdateView, FormView
 
-from apps.accounts.forms import CoachCreateForm
+from apps.accounts.forms import CoachCreateForm, SinglePasswordLoginForm
 from apps.accounts.models import User
 from apps.memberships.forms import MembershipPriceForm
 from apps.memberships.models import Membership
@@ -28,19 +29,14 @@ class OwnerRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
         return super().handle_no_permission()
 
 
-class AdminLoginView(LoginView):
+class AdminLoginView(FormView):
     template_name = "registration/login.html"
-    redirect_authenticated_user = True
+    form_class = SinglePasswordLoginForm
+    success_url = reverse_lazy("admin-dashboard")
 
     def form_valid(self, form):
-        user = form.get_user()
-        if user.role != User.Roles.OWNER:
-            form.add_error(None, "Solo el administrador puede iniciar sesión aquí.")
-            return self.form_invalid(form)
+        login(self.request, form.get_user())
         return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse_lazy("admin-dashboard")
 
 
 class AdminDashboardView(OwnerRequiredMixin, TemplateView):
